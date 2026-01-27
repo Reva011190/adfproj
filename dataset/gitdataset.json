@@ -5,12 +5,18 @@
 			"referenceName": "Httptogithub",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "filename_value"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "Reva011190/adfproj/refs/heads/staging/DimAirline.csv"
+				"relativeUrl": "Reva011190/adfproj/refs/heads/staging/"
 			},
 			"columnDelimiter": ",",
 			"rowDelimiter": "\n",
