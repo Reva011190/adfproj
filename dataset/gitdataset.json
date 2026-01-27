@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"filename": {
-				"type": "string"
+				"type": "array"
 			}
 		},
 		"annotations": [],
@@ -15,7 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "Reva011190/adfproj/refs/heads/staging/"
+				"relativeUrl": {
+					"value": "Reva011190/adfproj/refs/heads/staging/@{dataset().filename}",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"rowDelimiter": "\n",
