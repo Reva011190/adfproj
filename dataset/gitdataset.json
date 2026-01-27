@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "Reva011190/adfproj/tree/staging/DimAirline.csv"
+				"relativeUrl": "Reva011190/adfproj/blob/staging/DimAirline.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
