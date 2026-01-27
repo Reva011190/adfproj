@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "revadfproj"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"GitHub1_credential": {
+			"value": ""
+		},
+		"Httptogithub_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://revadfprojdatalake.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://revprojkeyvlt.vault.azure.net/"
+		},
+		"GitHub1_properties_typeProperties_username": {
+			"value": "Reva011190"
+		},
+		"Httptogithub_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"Httptogithub_properties_typeProperties_userName": {
+			"value": "Reva011190"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
