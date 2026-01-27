@@ -1,0 +1,15 @@
+{
+	"name": "Httptogithub",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://github.com/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "Reva011190",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDU2RTg4RUZBLUVFRkYtNDVEOC04RDFDLTk3MjQwM0JGRjUxQ19kZTJkYzkyNy1hM2JmLTQ0MTAtYjY0OC1iYWEyZmNjNDU2NWQiDQp9"
+		}
+	}
+}
