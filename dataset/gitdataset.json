@@ -7,8 +7,7 @@
 		},
 		"parameters": {
 			"filename": {
-				"type": "string",
-				"defaultValue": "filename_value"
+				"type": "string"
 			}
 		},
 		"annotations": [],
