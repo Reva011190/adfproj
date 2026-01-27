@@ -1,0 +1,22 @@
+{
+	"name": "gitdataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Httptogithub",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "Reva011190/adfproj/tree/staging/DimAirline.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
