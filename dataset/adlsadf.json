@@ -10,6 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "Airline.parquet",
+				"folderPath": "output",
 				"fileSystem": "bronze"
 			},
 			"compressionCodec": "snappy"
