@@ -1,0 +1,30 @@
+{
+	"name": "setvar",
+	"properties": {
+		"activities": [
+			{
+				"name": "incretimestamp",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vnow",
+					"value": {
+						"value": "@utcNow()",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"vnow": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
