@@ -172,7 +172,7 @@
 							{
 								"name": "lastload",
 								"value": {
-									"value": "@activity('Lookuplatest').output.firstRow.lookup_latest",
+									"value": "@activity('Lookuplatest').output.firstRow.latest_load",
 									"type": "Expression"
 								}
 							}
