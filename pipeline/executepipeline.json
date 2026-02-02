@@ -15,7 +15,13 @@
 						"referenceName": "parametergittoadls",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"for_filename": {
+							"value": "@pipeline().parameters.for_filename",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
