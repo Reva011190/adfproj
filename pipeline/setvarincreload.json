@@ -50,7 +50,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.FactBookings\nwhere booking_date > '@{activity('Lookuplastload').output.firstRow.lastload}'\nand booking_date <='@{activity('Lookuplatest').output.firstRow}'",
+							"value": "select * from dbo.FactBookings\nwhere booking_date > '@{activity('Lookuplastload').output.firstRow.lastload}'\nand booking_date <='@{activity('Lookuplatest').output.firstRow.latest_load}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -145,6 +145,61 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Watermark",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "incremecopy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "emptyjson",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Watermark",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"variables": {
