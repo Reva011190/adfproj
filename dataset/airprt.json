@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "DimAirport.json",
+				"fileName": "DimAirport (1).json",
 				"folderPath": "API",
 				"fileSystem": "bronze"
 			}
