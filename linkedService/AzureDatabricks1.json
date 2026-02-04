@@ -1,0 +1,21 @@
+{
+	"name": "AzureDatabricks1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-7405612074666854.14.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/5ed3ed12-0f67-44d2-833d-f07abaacfe82/resourceGroups/ADFproject/providers/Microsoft.Databricks/workspaces/revdbproj",
+			"newClusterNodeType": "Standard_DS3_v2",
+			"newClusterNumOfWorker": "2:4",
+			"newClusterSparkEnvVars": {
+				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+			},
+			"newClusterVersion": "10.4.x-scala2.12",
+			"newClusterDriverNodeType": "Standard_DS3_v2",
+			"clusterOption": "Autoscaling",
+			"newClusterInitScripts": []
+		}
+	}
+}
