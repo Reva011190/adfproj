@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase_password": {
+			"value": ""
+		},
 		"GitHub1_credential": {
 			"value": ""
 		},
@@ -19,6 +22,15 @@
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://revprojkeyvlt.vault.azure.net/"
+		},
+		"AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "revaserver.database.windows.net"
+		},
+		"AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "revadbazure"
+		},
+		"AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "revadmin"
 		},
 		"GitHub1_properties_typeProperties_username": {
 			"value": "Reva011190"
