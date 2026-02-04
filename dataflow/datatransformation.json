@@ -155,7 +155,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Renamecolumn",
 				"Renamecolumn filter(startsWith(flight_number, 'A')) ~> filterflightno",
-				"Passenger derive(gender = regexReplace(gender, 'M', 'Male') ) ~> replaceexp",
+				"Passenger derive(gender = regexReplace(gender, 'M', 'Male')) ~> replaceexp",
 				"replaceexp derive(gender = regexReplace(gender, 'F', 'Female')) ~> replaceFtoFemale",
 				"replaceFtoFemale filter(age > 25 && country != 'Mexico') ~> filteragecountry",
 				"filteragecountry derive(firstname = split(full_name, \" \")[1]) ~> Firstname",
