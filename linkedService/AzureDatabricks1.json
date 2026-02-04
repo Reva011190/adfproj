@@ -1,0 +1,13 @@
+{
+	"name": "AzureDatabricks1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-7405612074666854.14.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/5ed3ed12-0f67-44d2-833d-f07abaacfe82/resourceGroups/ADFproject/providers/Microsoft.Databricks/workspaces/revdbproj",
+			"existingClusterId": "0204-194621-o60zouqq"
+		}
+	}
+}
