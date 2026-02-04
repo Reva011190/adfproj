@@ -6,12 +6,102 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "revadfproj"
+		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://revadfprojdatalake.blob.core.windows.net/"
+		},
+		"AzureBlobStorage1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "30dc0f60-6657-4c74-b60c-59ca9ed23a6a"
+		},
+		"AzureBlobStorage1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "9f0b8c27-33b7-4825-9e9c-1ed90c4c4250"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/gitdataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Httptogithub",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "Reva011190/adfproj/refs/heads/staging/@{dataset().filename}",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"rowDelimiter": "\n",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": null
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/gitjson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Httptogithub",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "Reva011190/adfproj/refs/heads/staging/DimAirport.json"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/increparquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "sql",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/lookupjson')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -32,6 +122,31 @@
 					}
 				},
 				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"serviceEndpoint": "[parameters('AzureBlobStorage1_properties_typeProperties_serviceEndpoint')]",
+					"tenant": "[parameters('AzureBlobStorage1_properties_typeProperties_tenant')]",
+					"servicePrincipalId": "[parameters('AzureBlobStorage1_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalCert",
+					"servicePrincipalCredential": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "mysecret"
+					},
+					"accountKind": "StorageV2"
+				}
 			},
 			"dependsOn": []
 		},
@@ -272,9 +387,12 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/gitjson')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Goldpipeline')]",
@@ -320,7 +438,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/golddataflow')]"
@@ -397,9 +516,12 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/gitdataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/gittoadls2')]",
@@ -472,9 +594,12 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/gitdataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/parametergittoadls')]",
@@ -583,9 +708,12 @@
 						]
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/gitdataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/setvarincreload')]",
@@ -816,9 +944,11 @@
 						"type": "String"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:09Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/increparquet')]",
 				"[concat(variables('factoryId'), '/datasets/lookupjson')]"
 			]
 		},
@@ -1123,7 +1253,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:10Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/datatransformation')]"
@@ -1225,7 +1356,8 @@
 						]
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-02-04T17:07:10Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/parametergittoadls')]",

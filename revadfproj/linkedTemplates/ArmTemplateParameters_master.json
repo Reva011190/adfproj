@@ -17,11 +17,26 @@
 		"Httptogithub_password": {
 			"value": ""
 		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"value": "https://revadfprojdatalake.blob.core.windows.net/"
+		},
+		"AzureBlobStorage1_properties_typeProperties_tenant": {
+			"value": "30dc0f60-6657-4c74-b60c-59ca9ed23a6a"
+		},
+		"AzureBlobStorage1_properties_typeProperties_servicePrincipalId": {
+			"value": "9f0b8c27-33b7-4825-9e9c-1ed90c4c4250"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://revadfprojdatalake.dfs.core.windows.net/"
 		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0204-194621-o60zouqq"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://revprojkeyvlt.vault.azure.net/"
+		},
+		"AzureKeyVault2_properties_typeProperties_baseUrl": {
+			"value": "https://devkvadf.vault.azure.net/"
 		},
 		"AzureSqlDatabase_properties_typeProperties_server": {
 			"value": "revaserver.database.windows.net"
