@@ -1,0 +1,22 @@
+{
+	"name": "AzureBlobStorage1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://revadfprojdatalake.blob.core.windows.net/",
+			"tenant": "30dc0f60-6657-4c74-b60c-59ca9ed23a6a",
+			"servicePrincipalId": "9f0b8c27-33b7-4825-9e9c-1ed90c4c4250",
+			"servicePrincipalCredentialType": "ServicePrincipalCert",
+			"servicePrincipalCredential": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "mysecret"
+			},
+			"accountKind": "StorageV2"
+		}
+	}
+}
