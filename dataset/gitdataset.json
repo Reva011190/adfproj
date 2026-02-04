@@ -1,0 +1,31 @@
+{
+	"name": "gitdataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Httptogithub",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "Reva011190/adfproj/refs/heads/staging/@{dataset().filename}",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": null
+		},
+		"schema": []
+	}
+}

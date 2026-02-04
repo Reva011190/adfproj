@@ -1,0 +1,9 @@
+{
+	"name": "revadfproj",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ba91faf1-a012-4250-80fe-d5ca20fd53b4",
+		"tenantId": "30dc0f60-6657-4c74-b60c-59ca9ed23a6a"
+	}
+}

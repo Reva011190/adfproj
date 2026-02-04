@@ -1,0 +1,147 @@
+{
+	"name": "golddataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "factbookings"
+				},
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "flight"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sinktogold"
+				}
+			],
+			"transformations": [
+				{
+					"name": "joinflight"
+				},
+				{
+					"name": "selectflightid"
+				},
+				{
+					"name": "aggregatesales"
+				},
+				{
+					"name": "windowdrank"
+				},
+				{
+					"name": "filtertop5"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "surrogateKeyincre"
+				},
+				{
+					"name": "filtersurrotop5"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          booking_id as integer,",
+				"          passenger_id as integer,",
+				"          flight_id as integer,",
+				"          airline_id as integer,",
+				"          origin_airport_id as integer,",
+				"          destination_airport_id as integer,",
+				"          booking_date as date,",
+				"          ticket_cost as integer,",
+				"          flight_duration_mins as integer,",
+				"          checkin_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'silver',",
+				"     folderPath: 'Factbookings') ~> factbookings",
+				"source(output(",
+				"          flight_id as short,",
+				"          flight_number as string,",
+				"          departure_t as string,",
+				"          arrival_t as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'silver',",
+				"     folderPath: 'Dimflight') ~> flight",
+				"factbookings, flight join(factbookings@flight_id == flight@flight_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinflight",
+				"joinflight select(mapColumn(",
+				"          booking_id,",
+				"          passenger_id,",
+				"          flight_id = factbookings@flight_id,",
+				"          airline_id,",
+				"          origin_airport_id,",
+				"          destination_airport_id,",
+				"          booking_date,",
+				"          ticket_cost,",
+				"          flight_duration_mins,",
+				"          flight_number,",
+				"          departure_t,",
+				"          arrival_t",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectflightid",
+				"selectflightid aggregate(groupBy(booking_date),",
+				"     totalcost = sum(ticket_cost)) ~> aggregatesales",
+				"aggregatesales window(desc(totalcost, true),",
+				"     totalcost_rank = denseRank()) ~> windowdrank",
+				"windowdrank filter(totalcost_rank < 6) ~> filtertop5",
+				"aggregatesales sort(desc(totalcost, true),",
+				"     caseInsensitive: true) ~> sort1",
+				"sort1 keyGenerate(output(id as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKeyincre",
+				"surrogateKeyincre filter(id < 6) ~> filtersurrotop5",
+				"filtertop5 alterRow(insertIf(1==1)) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'gold',",
+				"     folderPath: 'factbookings',",
+				"     overwrite: true,",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     upsertable: false,",
+				"     keys:['booking_date'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinktogold"
+			]
+		}
+	}
+}
